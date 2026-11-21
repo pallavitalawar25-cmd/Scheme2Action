@@ -10,3 +10,4 @@ python-jose[cryptography]
 email-validator
 pytest
 httpx
+psycopg[binary]>=3.2
