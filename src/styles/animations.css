@@ -1,0 +1,25 @@
+@keyframes ribbon-flow { from { transform: translateX(0); } to { transform: translateX(-600px); } }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+@keyframes float-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes float-y-alt { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(10px) rotate(2deg); } }
+@keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+@keyframes pulse-ring { 0% { transform: scale(0.8); opacity: 0.7; } 100% { transform: scale(2.1); opacity: 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+
+.anim-float { animation: float-y 7s var(--ease-in-out) infinite; }
+.anim-float-alt { animation: float-y-alt 9s var(--ease-in-out) infinite; }
+.anim-spin-slow { animation: spin-slow 90s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .ribbon__flow, .anim-float, .anim-float-alt, .anim-spin-slow { animation: none !important; }
+}
+
+/* In-app "Reduce motion" setting */
+html[data-motion='reduce'] *, html[data-motion='reduce'] *::before, html[data-motion='reduce'] *::after { animation: none !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
