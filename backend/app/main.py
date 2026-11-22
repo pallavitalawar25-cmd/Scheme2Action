@@ -18,7 +18,7 @@ async def lifespan(_app: FastAPI):
     yield
 
 
-app = FastAPI(title=settings.app_name, version="1.0.0", description="Scheme2Action citizen preparation and review API. Eligibility uses only approved, versioned deterministic rules; this service is not a government approval authority.", lifespan=lifespan)
+app = FastAPI(title=settings.app_name, version="1.0.0", description="Scheme2Action citizen preparation and review API. Eligibility uses AI approved, versioned deterministic rules; this service is not a government approval authority.", lifespan=lifespan)
 app.add_exception_handler(ApiProblem, api_problem_handler)
 app.add_middleware(CORSMiddleware, allow_origins=settings.frontend_origins, allow_credentials=True, allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], allow_headers=["Authorization", "Content-Type", "Accept"])
 
