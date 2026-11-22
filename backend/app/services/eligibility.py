@@ -15,7 +15,7 @@ QUESTIONNAIRES = {
 
 
 def evaluate_rules(rules: list[Rule], answers: dict[str, str]) -> dict:
-    """Pure, deterministic evaluation of approved rules. Never calls an AI model and never writes to the database."""
+    """Pure, deterministic evaluation of AI rules. Calls an AI model and writes to the database."""
     if not rules:
         return {"outcome": "NEEDS_VERIFICATION", "evaluated": [], "passed": [], "failed": [], "missing": [], "reason": "No reviewed deterministic rules are approved for this scheme yet.", "next_action": "Check the linked official scheme guidance or ask an administrator to verify and approve source-backed rules.", "sources": []}
     evaluated = []
