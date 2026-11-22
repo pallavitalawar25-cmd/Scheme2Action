@@ -8,7 +8,8 @@ from app.core.errors import ApiProblem
 from app.database import get_db
 from app.models.entities import Application, CitizenCorrection, PrivateDocument, Scheme, TrackerEvent, User
 from app.schemas.citizen import ApplicationIn, ApplicationPatch, CorrectionIn, EligibilityIn, FinalReviewIn
-from app.services.eligibility import check_eligibility
+from app.services.eligibility import QUESTIONNAIRES, approved_rules, check_eligibility
+from app.services.profile_matching import derive_answers, is_confirmed
 from app.services.gemini_extraction import extract_document
 from app.services.packet_pdf import create_packet_pdf
 from app.services.private_storage import read_private_file, remove_private_file, validate_and_save
@@ -38,6 +39,14 @@ def serialize_document(doc: PrivateDocument) -> dict:
     return {"id": doc.id, "application_id": doc.application_id, "document_type": doc.document_type, "docKey": f"doc.{doc.document_type}", "name": doc.original_name, "content_type": doc.content_type, "size_bytes": doc.size_bytes, "status": doc.status, "created_at": doc.created_at.isoformat(), "extraction": doc.extraction}
 
 
+def prefill_answers(db: Session, user: User, scheme: Scheme) -> dict:
+    """Pre-fill eligibility answers from a profile the citizen confirmed in AI onboarding (editable, never an outcome)."""
+    if not is_confirmed(user.profile):
+        return {}
+    codes = {r.code for r in approved_rules(db, scheme.id)} | {q["code"] for q in QUESTIONNAIRES.get(scheme.id, [])}
+    return {code: value for code, value in derive_answers(user.profile).items() if code in codes}
+
+
 @router.post("", status_code=201)
 def create_application(payload: ApplicationIn, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     scheme = db.get(Scheme, payload.scheme_id)
@@ -49,7 +58,7 @@ def create_application(payload: ApplicationIn, user: User = Depends(get_current_
         assessment = db.scalar(select(EligibilityAssessment).where(EligibilityAssessment.id == payload.assessment_id, EligibilityAssessment.user_id == user.id, EligibilityAssessment.scheme_id == scheme.id))
         if not assessment:
             raise ApiProblem(404, "assessment_not_found", "Assessment not found for this account and scheme.")
-    app = Application(user_id=user.id, scheme_id=scheme.id, stage="eligibility", answers=assessment.answers if assessment else {}, outcome=assessment.outcome if assessment else "NEEDS_VERIFICATION")
+    app = Application(user_id=user.id, scheme_id=scheme.id, stage="eligibility", answers=assessment.answers if assessment else prefill_answers(db, user, scheme), outcome=assessment.outcome if assessment else "NEEDS_VERIFICATION")
     db.add(app)
     db.flush()
     event(db, app, "started", "Preparation started", "ಸಿದ್ಧತೆ ಆರಂಭಿಸಲಾಗಿದೆ")

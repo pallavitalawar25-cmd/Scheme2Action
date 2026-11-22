@@ -10,6 +10,7 @@ export const DEMO_SCHEME_ID = 'ssp-post-matric-scholarship';
 export const publicNav = [
   { id: 'home', to: '/', key: 'nav.home', end: true },
   { id: 'explore', to: '/schemes', key: 'nav.explore' },
+  { id: 'onboarding', to: '/onboarding', key: 'nav.onboarding' },
   { id: 'categories', to: '/categories', key: 'nav.categories', menu: true },
   { id: 'how', to: '/how-it-works', key: 'nav.how' },
   { id: 'about', to: '/about', key: 'nav.about' },

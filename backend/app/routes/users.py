@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
@@ -39,7 +41,11 @@ def get_profile(user: User = Depends(get_current_user)):
 @router.patch("/profile")
 def patch_profile(payload: ProfilePatch, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     profile = dict(user.profile or {})
-    profile.update({key: value for key, value in payload.model_dump(exclude_unset=True).items() if value is not None})
+    changes = payload.model_dump(exclude_unset=True)
+    consent = changes.pop("onboardingConsent", None)
+    if consent:
+        profile["onboardingConfirmedAt"] = datetime.now(timezone.utc).isoformat()
+    profile.update({key: value for key, value in changes.items() if value is not None})
     user.profile = profile
     if profile.get("fullName"):
         user.full_name = profile["fullName"].strip()

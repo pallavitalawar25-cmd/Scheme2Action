@@ -16,6 +16,7 @@ import './styles/schemes.css';
 import './styles/home.css';
 import './styles/citizen.css';
 import './styles/admin.css';
+import './styles/onboarding.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

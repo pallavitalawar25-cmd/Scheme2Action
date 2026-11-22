@@ -10,6 +10,7 @@ import T from '../../components/common/T';
 import Reveal from '../../components/common/Reveal';
 import CategoryCard from '../../components/schemes/CategoryCard';
 import HeroIllustration from '../../components/home/HeroIllustration';
+import AiOnboardingCta from '../../components/home/AiOnboardingCta';
 import StatsStrip from '../../components/home/StatsStrip';
 import FeaturedSchemes from '../../components/home/FeaturedSchemes';
 import HowItWorks from '../../components/home/HowItWorks';
@@ -51,6 +52,7 @@ export default function Home() {
       </section>
 
       <StatsStrip />
+      <AiOnboardingCta />
 
       <section className="section" aria-labelledby="cats-h">
         <div className="container">

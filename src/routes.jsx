@@ -25,6 +25,8 @@ const SavedSchemes = lazy(() => import('./pages/citizen/SavedSchemes'));
 const HelperWorkspace = lazy(() => import('./pages/citizen/HelperWorkspace'));
 const HelperIntro = lazy(() => import('./pages/public/HelperIntro'));
 const ApplicationJourney = lazy(() => import('./pages/application/ApplicationJourney'));
+const AIOnboarding = lazy(() => import('./pages/onboarding/AIOnboarding'));
+const OnboardingResults = lazy(() => import('./pages/onboarding/OnboardingResults'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const AdminPanel = lazy(() => import('./pages/admin/AdminPanel'));
 
@@ -41,6 +43,7 @@ export default function AppRoutes() {
         <Route path="how-it-works" element={<HowItWorksPage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="helper" element={<HelperIntro />} />
+        <Route path="onboarding" element={<AIOnboarding />} />
         <Route path="design-system" element={<DesignSystem />} />
         <Route path="*" element={<NotFound />} />
       </Route>
@@ -58,6 +61,7 @@ export default function AppRoutes() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="saved" element={<SavedSchemes />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="onboarding/results" element={<OnboardingResults />} />
           <Route path="settings" element={<Settings />} />
           <Route path="helper/workspace" element={<HelperWorkspace />} />
         </Route>

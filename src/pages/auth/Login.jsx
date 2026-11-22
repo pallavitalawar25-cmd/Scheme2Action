@@ -59,7 +59,7 @@ export default function Login() {
           <p className="muted authform__hint"><T k="auth.demoHint" /></p>
         </div>
       )}
-      <p className="authform__switch"><T k="auth.noAccount" /> <Link to="/register"><T k="auth.createAccount" /></Link></p>
+      <p className="authform__switch"><T k="auth.noAccount" /> <Link to="/register" state={from ? { from } : undefined}><T k="auth.createAccount" /></Link></p>
     </div>
   );
 }

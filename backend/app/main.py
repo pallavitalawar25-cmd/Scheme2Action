@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.errors import ApiProblem, api_problem_handler
 from app.database import SessionLocal, init_db
-from app.routes import admin, applications, auth, schemes, users
+from app.routes import admin, applications, auth, onboarding, schemes, users
 from app.services.seed import seed_database
 
 
@@ -25,6 +25,7 @@ app.add_middleware(CORSMiddleware, allow_origins=settings.frontend_origins, allo
 app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(schemes.router)
+app.include_router(onboarding.router)
 app.include_router(applications.router)
 app.include_router(admin.router)
 

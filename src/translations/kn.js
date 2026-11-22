@@ -3,6 +3,7 @@ import schemes from './kn.schemes';
 import pages from './kn.pages';
 import journey from './kn.journey';
 import admin from './kn.admin';
+import onboarding from './kn.onboarding';
 // Kannada. Any key missing here falls back to English automatically (and is marked in the UI).
 // Have a native Kannada speaker review this file before public release.
 const kn = {
@@ -145,4 +146,4 @@ const kn = {
   // page.* titles for batch 4-5 screens are intentionally omitted: they fall back to English until each page is built.
 };
 
-export default { ...kn, ...schemes, ...pages, ...citizen, ...journey, ...admin };
+export default { ...kn, ...schemes, ...pages, ...citizen, ...journey, ...admin, ...onboarding };

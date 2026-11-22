@@ -3,6 +3,7 @@ import schemes from './en.schemes';
 import pages from './en.pages';
 import journey from './en.journey';
 import admin from './en.admin';
+import onboarding from './en.onboarding';
 // English is the source of truth. Every key used in the app must exist here.
 const en = {
   'brand.name': 'Scheme2Action',
@@ -169,4 +170,4 @@ const en = {
   'page.adminPolicy': 'Policy Change Review',
 };
 
-export default { ...en, ...schemes, ...pages, ...citizen, ...journey, ...admin };
+export default { ...en, ...schemes, ...pages, ...citizen, ...journey, ...admin, ...onboarding };

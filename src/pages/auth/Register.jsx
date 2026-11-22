@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AlertCircle, AtSign, Mail, User } from 'lucide-react';
 import Button from '../../components/common/Button';
 import T from '../../components/common/T';
@@ -13,7 +13,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { useToast } from '../../context/ToastContext';
 import { checked, collect, email, fullName, matches, password, username } from '../../utils/validators';
-import { authErrorKey, homeFor } from './authHelpers';
+import { authErrorKey, safeRedirect } from './authHelpers';
 
 const validate = (v) => collect({
   name: fullName(v.name), email: email(v.email), username: username(v.username),
@@ -25,18 +25,19 @@ export default function Register() {
   const { t } = useLanguage();
   const toast = useToast();
   const navigate = useNavigate();
+  const from = useLocation().state?.from;
   const [serverError, setServerError] = useState(null);
   const [busy, setBusy] = useState(false);
   const form = useForm({ initial: { name: '', email: '', username: '', password: '', confirm: '', consent: false }, validate });
 
-  if (isAuthenticated && !busy) return <Navigate to={homeFor(user)} replace />;
+  if (isAuthenticated && !busy) return <Navigate to={safeRedirect(from, user)} replace />;
 
   const onSubmit = form.handleSubmit(async (v) => {
     setBusy(true); setServerError(null);
     try {
       const u = await register({ name: v.name, email: v.email, username: v.username, password: v.password });
       toast.success(t('toast.accountCreated'), 2600);
-      navigate(homeFor(u), { replace: true });
+      navigate(safeRedirect(from, u), { replace: true });
     } catch (e) { setServerError(authErrorKey(e)); setBusy(false); }
   });
 
@@ -58,7 +59,7 @@ export default function Register() {
         <p className="muted authform__hint"><T k="auth.consent.note" /></p>
         <Button type="submit" size="lg" block loading={busy}><T k="auth.createAccount" /></Button>
       </form>
-      <p className="authform__switch"><T k="auth.haveAccount" /> <Link to="/login"><T k="nav.login" /></Link></p>
+      <p className="authform__switch"><T k="auth.haveAccount" /> <Link to="/login" state={from ? { from } : undefined}><T k="nav.login" /></Link></p>
     </div>
   );
 }

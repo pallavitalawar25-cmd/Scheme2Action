@@ -10,6 +10,15 @@ class ProfilePatch(BaseModel):
     district: str | None = Field(default=None, max_length=100)
     pincode: str | None = Field(default=None, pattern=r"^$|^[0-9]{6}$")
     occupation: str | None = Field(default=None, max_length=80)
+    # Fields below are written by AI onboarding after the citizen reviews and confirms them.
+    # An empty string / empty list clears a value; None / omitted leaves it unchanged.
+    residence: str | None = Field(default=None, pattern=r"^(|rural|urban)$")
+    education: str | None = Field(default=None, pattern=r"^(|none|primary|secondary|higher_secondary|diploma_iti|graduate|postgraduate|doctorate)$")
+    annualIncome: int | None = Field(default=None, ge=0, le=1_000_000_000)
+    category: str | None = Field(default=None, pattern=r"^(|general|obc|sc|st|ews)$")
+    disability: str | None = Field(default=None, pattern=r"^(|yes|no)$")
+    circumstances: list[str] | None = Field(default=None, max_length=12)
+    onboardingConsent: bool | None = None
 
 
 class SettingsPatch(BaseModel):
