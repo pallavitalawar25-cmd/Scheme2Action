@@ -24,7 +24,7 @@ export default {
   'trust.2.title': 'Transparent eligibility', 'trust.2.desc': 'Every result lists which conditions passed, failed or are still unknown.',
   'trust.3.title': 'Citizen-controlled corrections', 'trust.3.desc': 'You can correct anything the AI reads and ask for a manual review.',
   'trust.4.title': 'Secure document handling', 'trust.4.desc': 'Documents are used only to prepare your application. In this demo build, files stay in your browser.',
-  'trust.principle': 'AI extraction is not ground truth.',
+  'trust.principle': 'AI assessments are guidance, and official eligibility decision.',
   'recent.title': 'Recently updated schemes', 'recent.sub': 'Update dates here are sample values for the demonstration.', 'recent.updated': 'Updated {date}',
   'why.title': 'Why Scheme2Action?',
   'why.1.title': 'Central and Karnataka in one place', 'why.1.desc': 'Browse both levels side by side, ready to grow to other states.',
